@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Brewly</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fffaf1;
+      margin: 0;
+      padding: 0;
+    }
+
+    @keyframes fadeSlide {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeSlide 1s ease forwards;
+    }
+
+    header {
+      background-color: #5a3e2b;
+      color: white;
+      padding: 4rem 1rem 2rem;
+      position: relative;
+      text-align: left;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      animation: fadeSlide 1.5s ease forwards;
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    header h1 .line1,
+    header h1 .line2 {
+      display: block;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      font-style: italic;
+      color: #f0e3d3;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeSlide 1.8s ease forwards;
+    }
+
+    .header-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: flex-end;
+      margin-top: 1rem;
+    }
+
+    .nav-link {
+      background-color: #c79e6d;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background-color: #a67c52;
+    }
+
+    .admin-link {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #c79e6d;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .admin-link:hover {
+      background-color: #a67c52;
+    }
+
+    .description {
+      text-align: left;
+      padding: 2rem 1rem;
+      font-size: 1.25rem;
+      color: #5a3e2b;
+      max-width: 900px;
+      margin: 0 auto;
+      animation-delay: 0.5s;
+    }
+
+    .coffee-info {
+      background-color: #fff4e5;
+      padding: 3rem 1rem;
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      border-radius: 12px;
+    }
+
+    .coffee-text {
+      flex: 1;
+    }
+
+    .coffee-info h2 {
+      color: #5a3e2b;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .coffee-info p {
+      color: #5a3e2b;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin: 1rem 0;
+    }
+
+    .info-link {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #c79e6d;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .info-link:hover {
+      background-color: #a67c52;
+    }
+
+    .coffee-image {
+      flex: 0 0 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .coffee-image img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      padding: 3rem 1rem;
+      animation-delay: 0.8s;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 280px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    .card h3 {
+      padding: 1rem;
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 600;
+      background-color: #f0e3d3;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+
+    .testimonials {
+      background-color: #fdf7f1;
+      padding: 3rem 1rem;
+      text-align: center;
+      animation-delay: 1.2s;
+    }
+
+    .testimonials h2 {
+      color: #5a3e2b;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .testimonials p {
+      max-width: 850px;
+      margin: 1rem auto;
+      font-style: italic;
+      color: #5a3e2b;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      background-color: #5a3e2b;
+      color: white;
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      animation-delay: 1.5s;
+    }
+
+    footer h2 {
+      margin-top: 0;
+      font-size: 1.6rem;
+    }
+
+    footer p {
+      margin: 6px 0;
+      font-size: 1rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+
+      .card {
+        width: 90%;
+      }
+
+      .menu-cards {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .coffee-info {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .coffee-image {
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="admin.html" class="admin-link">Admin</a>
+
+  <header>
+    <h1>
+      <span class="line1">Brewly</span>
+      <span class="line2">Café</span>
+    </h1>
+    <div class="tagline">Experience the warmth of our café, where every brew is a story waiting to be told.</div>
+
+    <!-- Buttons under the title -->
+    <div class="header-buttons">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="categorie.html?cat=Coffee" class="nav-link">Menu</a>
+      <a href="despre-noi.html" class="nav-link">About Us</a> <!-- Modificat aici -->
+    </div>
+  </header>
+
+  <div class="description fade-in" style="animation-delay: 0.5s;">
+    At our café, the passion for taste blends with a warm atmosphere. Discover our selection of fine coffee and teas, carefully prepared in a place where time flows slower, and flavors tell stories.
+  </div>
+
+  <div class="coffee-info fade-in" style="animation-delay: 1s;">
+    <div class="coffee-text">
+      <h2>Discover the Quality of Our Coffee</h2>
+      <p>
+        Every coffee bean we use comes from sustainable, carefully selected plantations.
+        We emphasize artisan roasting methods that preserve the authentic flavors and pure taste of coffee.
+      </p>
+      <p>
+        From high-altitude Arabica varieties to exclusive blends, we want each cup served at Brewly
+        to be a unique and memorable experience. <strong>Quality means care – from farmer to barista.</strong>
+      </p>
+      <a href="despre-noi.html" class="info-link">Learn more about our coffee</a> <!-- Modificat aici -->
+    </div>
+    <div class="coffee-image">
+      <img src="https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg" alt="Coffee Cup">
+    </div>
+  </div>
+
+  <div class="menu-cards fade-in" style="animation-delay: 0.8s;">
+    <a class="card" href="categorie.html?cat=Coffee">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80" alt="Coffee">
+      <h3>Coffee</h3>
+    </a>
+    <a class="card" href="categorie.html?cat=Tea">
+      <img src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80" alt="Tea">
+      <h3>Tea</h3>
+    </a>
+  </div>
+
+  <div class="testimonials fade-in" style="animation-delay: 1.2s;">
+    <h2>What Our Customers Say</h2>
+    <p>“The coffee is absolutely wonderful, and the atmosphere is just what you need to start the day right!” – Andrei M.</p>
+    <p>“I always return for the aromatic teas and friendly staff.” – Ioana T.</p>
+
+    <h2 style="margin-top: 3rem;">Special Offers</h2>
+    <p>Every Friday, with any coffee purchase, you get a free dessert!</p>
+  </div>
+
+  <footer class="fade-in" style="animation-delay: 1.5s;">
+    <h2>Contact</h2>
+   
+    <p>Email: contact@cafeneaua.ro</p>
+
+    <h2>Opening Hours</h2>
+    <p>Monday - Friday: 08:00 - 20:00</p>
+    <p>Saturday - Sunday: 09:00 - 22:00</p>
+
+    <p style="margin-top: 2rem; font-size: 0.9rem;">&copy; 2025 Brewly. All rights reserved.</p>
+  </footer>
+
+  <script>
+    try {
+      const storedProducts = JSON.parse(localStorage.getItem("products"));
+      if (!Array.isArray(storedProducts) || storedProducts.length === 0) {
+        const defaultProducts = [
+          { name: "Espresso", price: 10.5, category: "Coffee" },
+          { name: "Latte", price: 13.0, category: "Coffee" },
+          { name: "Cappuccino", price: 12.0, category: "Coffee" },
+          { name: "Green Tea", price: 9.0, category: "Tea" },
+          { name: "Fruit Tea", price: 8.5, category: "Tea" }
+        ];
+        localStorage.setItem("products", JSON.stringify(defaultProducts));
+      }
+    } catch (e) {
+      const defaultProducts = [
+        { name: "Espresso", price: 10.5, category: "Coffee" },
+        { name: "Latte", price: 13.0, category: "Coffee" },
+        { name: "Cappuccino", price: 12.0, category: "Coffee" },
+        { name: "Green Tea", price: 9.0, category: "Tea" },
+        { name: "Fruit Tea", price: 8.5, category: "Tea" }
+      ];
+      localStorage.setItem("products", JSON.stringify(defaultProducts));
+    }
+  </script>
+
+</body>
+</html>

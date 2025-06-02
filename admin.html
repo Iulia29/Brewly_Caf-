@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Products</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #FDF6EE;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(123, 75, 42, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      color: #7B4B2A;
+    }
+
+    form {
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #7B4B2A;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #5C3620;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    th {
+      background-color: #D4A373;
+      color: white;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 2px solid #7B4B2A;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      color: #7B4B2A;
+    }
+
+    .logo img {
+      width: 30px;
+      margin-right: 10px;
+    }
+
+    .header button {
+      background-color: #7B4B2A;
+      color: white;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .header button:hover {
+      background-color: #5C3620;
+    }
+
+    @media (max-width: 600px) {
+      input, select {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <img src="https://img.icons8.com/ios/452/coffee.png" alt="Coffee Icon">
+      <span>Brewly Admin</span>
+    </div>
+    <div>
+      <button onclick="window.location.href='index.html'">Back to Site</button>
+      <button onclick="exportProducts()">Export Products</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Product Management</h1>
+    <form id="productForm">
+      <label for="name">Product Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="price">Price:</label>
+      <input type="number" id="price" step="0.01" required>
+
+      <label for="category">Category:</label>
+      <select id="category">
+        <option value="Coffee">Coffee</option>
+        <option value="Tea">Tea</option>
+        <option value="Dessert">Dessert</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <button type="submit">Add Product</button>
+    </form>
+
+    <h2>Product List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Category</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="productTable"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const form = document.getElementById("productForm");
+    const productTable = document.getElementById("productTable");
+
+    let products = JSON.parse(localStorage.getItem("products")) || [];
+
+    function renderProducts() {
+      productTable.innerHTML = products.map((prod, index) => `
+        <tr>
+          <td>${prod.name}</td>
+          <td>${prod.price.toFixed(2)} lei</td>
+          <td>${prod.category}</td>
+          <td><button onclick="deleteProduct(${index})">Delete</button></td>
+        </tr>
+      `).join("");
+    }
+
+    function deleteProduct(index) {
+      if (confirm("Are you sure you want to delete this product?")) {
+        products.splice(index, 1);
+        localStorage.setItem("products", JSON.stringify(products));
+        renderProducts();
+      }
+    }
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const price = parseFloat(document.getElementById("price").value);
+      const category = document.getElementById("category").value;
+
+      if (!name || isNaN(price)) return;
+
+      products.push({ name, price, category });
+      localStorage.setItem("products", JSON.stringify(products));
+
+      form.reset();
+      renderProducts();
+    });
+
+    function exportProducts() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(products, null, 2));
+      const downloadAnchorNode = document.createElement("a");
+      downloadAnchorNode.setAttribute("href", dataStr);
+      downloadAnchorNode.setAttribute("download", "products.json");
+      document.body.appendChild(downloadAnchorNode);
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
+
+

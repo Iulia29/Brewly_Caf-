@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Brewly - Dashboard</title>
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #fffaf3;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #7b4b2a;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .logout-btn {
+      background-color: #a67c52;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      background-color: #8c6239;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto 0;
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(123, 75, 42, 0.2);
+    }
+
+    h2 {
+      color: #7B4B2A;
+      text-align: center;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin: 30px 0;
+      text-align: center;
+    }
+
+    .stat-box {
+      background-color: #D4A373;
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 45%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    th {
+      background-color: #7B4B2A;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      .stats {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .stat-box {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Brewly - Order Statistics</h2>
+
+    <div class="stats">
+      <div class="stat-box">
+        <h3>Total Orders</h3>
+        <p id="totalOrders">0</p>
+      </div>
+      <div class="stat-box">
+        <h3>Total Revenue</h3>
+        <p id="totalRevenue">0.00 RON</p>
+      </div>
+    </div>
+
+    <h2>Popular Products</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity Sold</th>
+        </tr>
+      </thead>
+      <tbody id="popularProducts">
+        <!-- Filled via JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    // Total orders
+    document.getElementById("totalOrders").textContent = orders.length;
+
+    // Total revenue
+    const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
+    document.getElementById("totalRevenue").textContent = totalRevenue.toFixed(2) + ' RON';
+
+    // Product statistics
+    const productStats = {};
+    orders.forEach(order => {
+      order.items.forEach(item => {
+        if (!productStats[item.name]) productStats[item.name] = 0;
+        productStats[item.name] += item.quantity;
+      });
+    });
+
+    const tbody = document.getElementById("popularProducts");
+    if (Object.keys(productStats).length === 0) {
+      tbody.innerHTML = "<tr><td colspan='2'>No products have been ordered yet.</td></tr>";
+    } else {
+      Object.entries(productStats)
+        .sort((a, b) => b[1] - a[1])
+        .forEach(([name, qty]) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `<td>${name}</td><td>${qty}</td>`;
+          tbody.appendChild(row);
+        });
+    }
+  </script>
+</body>
+</html>
+
+

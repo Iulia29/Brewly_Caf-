@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Brewly - Category Menu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #fffaf3;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #5c3d2e;
+      margin-bottom: 30px;
+      position: relative;
+      display: inline-block;
+    }
+
+    h1::after {
+      content: '';
+      display: block;
+      width: 60%;
+      margin: 8px auto 0;
+      border-bottom: 2px solid #a67c52;
+    }
+
+    #productList {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      justify-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .product {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 300px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .product h3 {
+      margin: 0 0 10px;
+      color: #5c3d2e;
+    }
+
+    .product p {
+      margin: 0 0 10px;
+      font-weight: bold;
+      color: #7b4b2a;
+    }
+
+    .product button {
+      padding: 8px 15px;
+      background-color: #a67c52;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .product button:hover {
+      background-color: #8c6239;
+    }
+
+    .product button:active {
+      transform: scale(0.95);
+    }
+
+    .goto-cart-btn {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #7b4b2a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .goto-cart-btn:hover {
+      background-color: #5c3d2e;
+    }
+
+    a.back {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #7B4B2A;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="categoryTitle"></h1>
+  <div id="productList"></div>
+
+  <button class="goto-cart-btn" onclick="goToCart()">View Cart</button>
+  <br>
+  <a class="back" href="index.html">← Back to Brewly</a>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get("cat");
+
+    document.getElementById("categoryTitle").innerText = "Brewly - " + category + " Menu";
+
+    const allProducts = [
+      {
+        name: "Classic Espresso",
+        price: 9.5,
+        category: "Coffee",
+        image: "https://images.pexels.com/photos/1749303/pexels-photo-1749303.jpeg",
+        stock: 5
+      },
+      {
+        name: "Cafe Latte",
+        price: 12,
+        category: "Coffee",
+        image: "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg",
+        stock: 5
+      },
+      {
+        name: "Cold Brew To-Go",
+        price: 11,
+        category: "Coffee",
+        image: "https://images.pexels.com/photos/849643/pexels-photo-849643.jpeg",
+        stock: 5
+      },
+      {
+        name: "Classic Black Tea",
+        price: 8,
+        category: "Tea",
+        image: "https://images.pexels.com/photos/1493080/pexels-photo-1493080.jpeg",
+        stock: 5
+      },
+      {
+        name: "Green Tea with Lemon",
+        price: 9,
+        category: "Tea",
+        image: "https://images.pexels.com/photos/2013749/pexels-photo-2013749.jpeg",
+        stock: 5
+      },
+      {
+        name: "Chamomile Tea",
+        price: 7.5,
+        category: "Tea",
+        image: "https://images.pexels.com/photos/230483/pexels-photo-230483.jpeg",
+        stock: 5
+      }
+    ];
+
+    const filtered = allProducts.filter(p => p.category === category);
+    const container = document.getElementById("productList");
+
+    function addToCart(product) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+      if (!cart[product.name]) {
+        cart[product.name] = {
+          name: product.name,
+          price: product.price,
+          quantity: 1,
+          stock: product.stock
+        };
+      } else {
+        if (cart[product.name].quantity >= product.stock) {
+          alert(`Out of stock for ${product.name}.`);
+          return;
+        }
+        cart[product.name].quantity += 1;
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(`"${product.name}" has been added to the cart.`);
+    }
+
+    function goToCart() {
+      window.location.href = "client.html";
+    }
+
+    if (filtered.length === 0) {
+      container.innerHTML = "<p>No products available in this category.</p>";
+    } else {
+      filtered.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+          <img src="${p.image}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p>${p.price.toFixed(2)} RON</p>
+          <button>Add to Cart</button>
+        `;
+        div.querySelector("button").addEventListener("click", () => addToCart(p));
+        container.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
+
+
+

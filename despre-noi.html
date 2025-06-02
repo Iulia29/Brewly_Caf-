@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brewly - About Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fffaf3;
+      color: #333;
+    }
+
+    header {
+      background-color: #7B4B2A;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 40px;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2.section-title {
+      color: #7B4B2A;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .story-text {
+      line-height: 1.6;
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    .values {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .value-box {
+      text-align: center;
+      width: 80%;
+      margin-bottom: 20px;
+    }
+
+    .value-box img {
+      width: 80%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+    }
+
+    .value-box p {
+      font-size: 16px;
+      color: #777;
+    }
+
+    .products {
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .product-item {
+      width: 30%;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .product-item img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .testimonials {
+      background-color: #D4A373;
+      padding: 30px 0;
+      color: white;
+      text-align: center;
+    }
+
+    .testimonial {
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .testimonial .customer-name {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    footer {
+      background-color: #7B4B2A;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .value-box, .product-item {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Brewly - About Us</h1>
+  </header>
+
+  <div class="container">
+    <h2 class="section-title">Our Story</h2>
+    <p class="story-text">At Brewly, every cup of coffee and every slice of cake tells a story about our passion for authentic flavors and special moments. It all began in a small café in the heart of the city, with the desire to bring a burst of flavor to our customers’ everyday lives...</p>
+
+    <h2 class="section-title">Our Mission and Values</h2>
+    <div class="values">
+      <div class="value-box">
+        <img src="img/coffe.jpg" alt="Mission and Values">
+        <p><strong>Quality</strong> – We ensure that every product meets the highest quality standards.</p>
+      </div>
+    </div> 
+
+    <h2 class="section-title">Popular Products</h2>
+    <div class="products">
+      <div class="product-item">
+        <img src="img/expreso.jpg" alt="Espresso Coffee">
+        <p><strong>Espresso Coffee</strong></p>
+        <p>Intense, aromatic, and with a creamy texture.</p>
+      </div>
+      <div class="product-item">
+        <img src="img/tea.jpg" alt="Fruit Tea">
+        <p><strong>Fruit Tea</strong></p>
+        <p>Refreshing and full of vitamins.</p>
+      </div>
+    </div>
+
+    <div class="testimonials">
+      <div class="testimonial">
+        "A wonderful place where you feel at home! The coffee is delicious and the atmosphere is perfect!"
+        <div class="customer-name">Ana I.</div>
+      </div>
+      <div class="testimonial">
+        "One of the best places to spend time with friends and enjoy something good!"
+        <div class="customer-name">Mihai P.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Brewly. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
